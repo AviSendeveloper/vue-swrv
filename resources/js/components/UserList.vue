@@ -13,29 +13,17 @@
                     <thead>
                         <tr>
                             <th>#</th>
-                            <th>First</th>
-                            <th>Last</th>
-                            <th>Handle</th>
+                            <th>Name</th>
+                            <th>Email</th>
+                            <th>Register Date</th>
                         </tr>
                     </thead>
                     <tbody>
-                        <tr>
-                            <th>1</th>
-                            <td>Mark</td>
-                            <td>Otto</td>
-                            <td>@mdo</td>
-                        </tr>
-                        <tr>
-                            <th>2</th>
-                            <td>Jacob</td>
-                            <td>Thornton</td>
-                            <td>@fat</td>
-                        </tr>
-                        <tr>
-                            <th>3</th>
-                            <td>Larry</td>
-                            <td>the Bird</td>
-                            <td>@twitter</td>
+                        <tr v:for="(user, index) in data" :key="index">
+                            <!-- <th>{{ index }}</th> -->
+                            <td>{{ user.name }}</td>
+                            <td>{{ user.email }}</td>
+                            <td>{{ user.created_at }}</td>
                         </tr>
                     </tbody>
                 </table>
@@ -46,8 +34,25 @@
 
 <script>
 export default {
-    mounted() {
+    data() {
+        return {
+            data: {},
+        }
+    },
+    async mounted() {
         console.log("Component mounted.");
+        try {
+            const res = await axios.get("api/users");
+            this.data = res.data;
+            // for (let i in this.data) {
+            //     console.log(this.data[i].name);
+            // }
+            this.data.forEach((key, value) => {
+                
+            });
+        } catch (error) {
+            console.log(`Error : ${error}`);
+        }
     },
 };
 </script>
